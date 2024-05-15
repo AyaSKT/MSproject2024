@@ -28,18 +28,25 @@ void Mode_Switch(void){
 
     //goto label;
     //OLED_ClearBuffer();
-    //ThisThread::sleep_for(200ms);
+    wait_us(30000);
 }
 
 extern std::unordered_map<tunes,int>Tune2Freq;
 extern std::vector<pair<tunes,float>>music;
+
+void OLED_Clear_Left(void){
+    for(int i=0;i<=63;i++){
+        OLED_DrawLineBuffered(8,i,75,8,0);
+    }
+    OLED_SendBuffer();
+}
 
 int main(){
     //buzzer.period(0.0f);
     //ThisThread::sleep_for(20s);
     //buzzer_soundset(buzzer,tunes::C3s);
     
-
+    
     OLED_Init();
     OLED_ClearBuffer();
 
@@ -51,6 +58,8 @@ int main(){
     
     OLED_ShowNumBuffered(97,97,mode,1,8,1);
 
+
+
     wait_us(1000000);
     OLED_ShowStringBuffered(89,75,"Mode",8,1);
         
@@ -58,38 +67,86 @@ int main(){
     OLED_DrawCircleBuffered(100,100,10);
     OLED_DrawLineBuffered(75,0,75,64,1);
     OLED_SendBuffer();
-   
+    for(int i=7;i>=1;i--){
+                OLED_ShowNumBuffered(0,(i-1)*8+i,8-i,1,8,1);
+            }
     while(1){ 
         
 
-        OLED_Show_Condition();
+        //OLED_Show_Condition();
        
         OLED_SendBuffer();
             
-            play_CRY(buzzer,VCC);
+            
         //buzzer_soundset(buzzer,tunes::C3,VCC);    
         
         if(mode==1){
             
+            if(keys.read()!=0){
+                if(keys.read()==0b1)
+                    {buzzer_soundset(buzzer,tunes::C4,VCC,1);OLED_DrawLineBuffered(8,56,75,8,1);}
+                else if(keys.read()==0b10)
+                    {buzzer_soundset(buzzer,tunes::D4,VCC,1);OLED_DrawLineBuffered(8,48,75,8,1);}
+                else if(keys.read()==0b100)
+                    {buzzer_soundset(buzzer,tunes::E4,VCC,1);OLED_DrawLineBuffered(8,40,75,8,1);}
+                else if(keys.read()==0b1000)
+                    {buzzer_soundset(buzzer,tunes::F4,VCC,1);OLED_DrawLineBuffered(8,32,75,8,1);}
+                else if(keys.read()==0b10000)
+                    {buzzer_soundset(buzzer,tunes::G4,VCC,1);OLED_DrawLineBuffered(8,24,75,8,1);}
+                else if(keys.read()==0b100000)
+                    {buzzer_soundset(buzzer,tunes::A4,VCC,1);OLED_DrawLineBuffered(8,16,75,8,1);}
+                else if(keys.read()==0b1000000)
+                    {buzzer_soundset(buzzer,tunes::B4,VCC,1);OLED_DrawLineBuffered(8,8,75,8,1);}
+                OLED_SendBuffer();
+            }
+            else {buzzer_soundset(buzzer,tunes::Pause,VCC,1);OLED_Clear_Left();}
+            ThisThread::sleep_for(50ms);
         }
         else if(mode==2){
             
             //VCC=0;
+            OLED_Clear_Left();
+            wait_us(1000000);
+            if(mode!=2) continue;
             
+            OLED_ShowStringBuffered(10,20,"Playing",8,1);
+            OLED_ShowStringBuffered(10,38,"Haruhikage",8,1);
 
-            ThisThread::sleep_for(3s);
-            mode=1;
             OLED_ShowNumBuffered(97,97,mode,1,8,1);
             OLED_SendBuffer();
+
+            play_CRY(buzzer,VCC,mode==2);
+
+            OLED_ShowNumBuffered(97,97,mode,1,8,1);
+            OLED_SendBuffer();
+            ThisThread::sleep_for(500ms);
+            mode=1;
+            
+            
         }
         else if(mode==3){
-            mode=1;
+            OLED_Clear_Left();
+            wait_us(1000000);
+            if(mode!=3) continue;
+            
+            OLED_ShowStringBuffered(10,20,"Playing",8,1);
+            OLED_ShowStringBuffered(10,38,"SecretBase",8,1);
+
             OLED_ShowNumBuffered(97,97,mode,1,8,1);
             OLED_SendBuffer();
+
+            play_CRY(buzzer,VCC,mode==3);
+
+            OLED_ShowNumBuffered(97,97,mode,1,8,1);
+            OLED_SendBuffer();
+            ThisThread::sleep_for(500ms);
+            mode=1;
         }
 
-
-        ThisThread::sleep_for(200ms);
+        OLED_ShowNumBuffered(97,97,mode,1,8,1);
+        OLED_SendBuffer();
+        //ThisThread::sleep_for(20ms);
        // OLED_ClearBuffer();
+       
     }
-}
+}// todo : add a mode switch button

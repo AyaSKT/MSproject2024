@@ -38,7 +38,15 @@ void buzzer_soundset(PwmOut &IO,tunes input,DigitalOut &VCC,bool condi){
         IO.write(0.2f);
     }
 }
-
+//**
+// * @brief  播放音乐
+// * @param  IO PWM输出引脚
+// * @param  Music 音乐
+// * @param  tunesPerMin 每分钟节拍数
+// * @param  VCC 电源控制引脚
+// * @param  condi 是否播放
+// * @retval 无
+// */
 
 
 void buzzer_playmusic(PwmOut &IO,vector<pair<tunes,float>>Music, float tunesPerMin,DigitalOut &VCC,bool condi){
