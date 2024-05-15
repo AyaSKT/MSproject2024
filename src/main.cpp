@@ -24,7 +24,11 @@ void Mode_Switch(void){
     mode++;
     if(mode==4) mode=1;
     OLED_ShowNumBuffered(97,97,mode,1,8,1);
-    ThisThread::sleep_for(200ms);
+    OLED_SendBuffer();
+
+    //goto label;
+    //OLED_ClearBuffer();
+    //ThisThread::sleep_for(200ms);
 }
 
 extern std::unordered_map<tunes,int>Tune2Freq;
@@ -43,35 +47,49 @@ int main(){
     Modes_button.rise(&Mode_Switch);
     keys.mode(PullDown);
     //OLED_Genshin();
+    VCC=0;
+    
+    OLED_ShowNumBuffered(97,97,mode,1,8,1);
 
-    
-    
-    while(1){ 
-        OLED_ShowStringBuffered(88,75,"Mode",8,1);
+    wait_us(1000000);
+    OLED_ShowStringBuffered(89,75,"Mode",8,1);
         
-        OLED_DrawCircleBuffered(100,100,12);
-        OLED_DrawLineBuffered(75,0,75,64,1);
+    OLED_DrawCircleBuffered(100,100,12);
+    OLED_DrawCircleBuffered(100,100,10);
+    OLED_DrawLineBuffered(75,0,75,64,1);
+    OLED_SendBuffer();
+   
+    while(1){ 
+        
 
         OLED_Show_Condition();
        
         OLED_SendBuffer();
+            
+            play_CRY(buzzer,VCC);
+        //buzzer_soundset(buzzer,tunes::C3,VCC);    
+        
         if(mode==1){
             
         }
         else if(mode==2){
             
-            VCC=0;
+            //VCC=0;
+            
+
             ThisThread::sleep_for(3s);
-            VCC=1;
-            play_CRY(buzzer);
-            VCC=0;
+            mode=1;
+            OLED_ShowNumBuffered(97,97,mode,1,8,1);
+            OLED_SendBuffer();
         }
         else if(mode==3){
-            
+            mode=1;
+            OLED_ShowNumBuffered(97,97,mode,1,8,1);
+            OLED_SendBuffer();
         }
 
 
-        ThisThread::sleep_for(20ms);
-        //OLED_ClearBuffer();
+        ThisThread::sleep_for(200ms);
+       // OLED_ClearBuffer();
     }
 }
