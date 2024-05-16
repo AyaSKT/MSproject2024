@@ -38,16 +38,11 @@ void buzzer_soundset(PwmOut &IO,tunes input,DigitalOut &VCC,bool condi){
         IO.write(0.2f);
     }
 }
-//**
-// * @brief  播放音乐
-// * @param  IO PWM输出引脚
-// * @param  Music 音乐
-// * @param  tunesPerMin 每分钟节拍数
-// * @param  VCC 电源控制引脚
-// * @param  condi 是否播放
-// * @retval 无
-// */
 
+/**
+ * @brief Play music
+ * @param IO PWM output pin for buzzer  
+*/
 
 void buzzer_playmusic(PwmOut &IO,vector<pair<tunes,float>>Music, float tunesPerMin,DigitalOut &VCC,bool condi){
     auto delay_time=(60000/tunesPerMin);
@@ -95,7 +90,37 @@ std::vector<pair<tunes,float>> music1 = {
  };
 
 std::vector<pair<tunes,float>> music2 = {
-        {tunes::E4,2},  {tunes::D4,1},  {tunes::C4,2},  {tunes::D4,1}//1
+        {tunes::Pause,3},{tunes::G4,1}, {tunes::C5,1},   {tunes::D5,1},//8
+        {tunes::D5,1}, {tunes::E5,1}, {tunes::E5,1}, {tunes::E5,1}, {tunes::E5,2},{tunes::E5,2},//9
+        {tunes::D5,1}, {tunes::D5,1}, {tunes::D5,1}, {tunes::D5,1}, {tunes::D5,2},{tunes::D5,2},//10
+        {tunes::C5,1}, {tunes::C5,1}, {tunes::C5,1}, {tunes::C5,1}, {tunes::C5,2},{tunes::C5,2},//11
+        {tunes::G4,1}, {tunes::G4,1}, {tunes::G4,2}, {tunes::G4,1}, {tunes::C5,1},{tunes::D5,1},//12
+        {tunes::E5,2}, {tunes::E5,1}, {tunes::E5,1}, {tunes::E5,1}, {tunes::E5,1},{tunes::G5,2},//13
+        {tunes::E5,1}, {tunes::E5,1}, {tunes::E5,1}, {tunes::E5,1}, {tunes::E5,1},{tunes::D5,1},{tunes::C5,1},//14
+        {tunes::D5,2}, {tunes::E5,1}, {tunes::E5,1}, {tunes::E5,1}, {tunes::E5,3},{tunes::Pause,0.5},//15
+        {tunes::G5,2}, {tunes::F5,2}, {tunes::E5,2}, {tunes::D5,1}, {tunes::E5,1},//16
+        {tunes::D5,2}, {tunes::C5,1}, {tunes::C5,1}, {tunes::C5,4},//17
+        {tunes::Pause,6},{tunes::D5,1},{tunes::E5,1},//18
+        {tunes::D5,2}, {tunes::C5,1}, {tunes::C5,1}, {tunes::C5,4},//19
+        {tunes::Pause,8},//20
+        {tunes::C5,1}, {tunes::C5,1}, {tunes::C5,1}, {tunes::C5,1}, {tunes::C5,1}, {tunes::C5,1}, {tunes::C5,2},//21
+        {tunes::C5,2}, {tunes::B4,1}, {tunes::G4,4}, {tunes::G4,1},//22
+        {tunes::C5,1}, {tunes::C5,1}, {tunes::C5,1}, {tunes::C5,1}, {tunes::C5,1}, {tunes::C5,1}, {tunes::C5,2},//23
+        {tunes::C5,2}, {tunes::B4,1}, {tunes::G4,4}, {tunes::G4,1},//24
+        {tunes::C5,1}, {tunes::C5,1}, {tunes::C5,1}, {tunes::C5,1}, {tunes::C5,1}, {tunes::C5,2}, {tunes::C5,1},//25
+        {tunes::D5,1.5},{tunes::G4,1.5},{tunes::G4,2},{tunes::G4,1},{tunes::G4,1}, {tunes::E4,1},//26
+        {tunes::G4,2}, {tunes::A4,1}, {tunes::A4,5},
+        {tunes::D4,4}, {tunes::E4,4},
+
+        {tunes::C5,1}, {tunes::C5,1}, {tunes::C5,1}, {tunes::C5,1}, {tunes::C5,1}, {tunes::C5,1}, {tunes::C5,2},//21
+        {tunes::C5,2}, {tunes::B4,1}, {tunes::G4,4}, {tunes::G4,1},//22
+        {tunes::C5,1}, {tunes::C5,1}, {tunes::C5,1}, {tunes::C5,1}, {tunes::C5,1}, {tunes::C5,1}, {tunes::C5,2},//23
+        {tunes::C5,2}, {tunes::B4,1}, {tunes::G4,4}, {tunes::G4,1},//32
+
+        {tunes::C5,1}, {tunes::C5,1}, {tunes::C5,1}, {tunes::C5,1}, {tunes::C5,1}, {tunes::C5,2}, {tunes::C5,1},//25
+        {tunes::D5,1.5},{tunes::G4,1.5},{tunes::G4,2},{tunes::G4,1},{tunes::G4,1}, {tunes::E4,1},//26
+        {tunes::G4,2}, {tunes::A4,1}, {tunes::A4,8},//36
+
 
 };
 
@@ -103,5 +128,5 @@ std::vector<pair<tunes,float>> music2 = {
     buzzer_playmusic(IO,music1,200,VCC,condi);
  }
  void play_SCB(PwmOut &IO,DigitalOut &VCC,bool condi){
-    buzzer_playmusic(IO,music2,200,VCC,condi);
+    buzzer_playmusic(IO,music2,230,VCC,condi);
  }

@@ -4,6 +4,7 @@
 #include "buzzer_AyaSKT\buzzer_AyaSKT.h"
 
 BusIn keys(A1,A2,A3,A0,A5,A6,A7);
+
 void OLED_Show_Condition(void){
     auto num=keys.read();
     long long res=0;
@@ -42,6 +43,7 @@ void OLED_Clear_Left(void){
 }
 
 int main(){
+    
     //buzzer.period(0.0f);
     //ThisThread::sleep_for(20s);
     //buzzer_soundset(buzzer,tunes::C3s);
@@ -84,22 +86,22 @@ int main(){
             
             if(keys.read()!=0){
                 if(keys.read()==0b1)
-                    {buzzer_soundset(buzzer,tunes::C4,VCC,1);OLED_DrawLineBuffered(8,56,75,8,1);}
+                    {buzzer_soundset(buzzer,tunes::C4,VCC,1); OLED_DrawLineBuffered(8,56,75,8,1);}
                 else if(keys.read()==0b10)
-                    {buzzer_soundset(buzzer,tunes::D4,VCC,1);OLED_DrawLineBuffered(8,48,75,8,1);}
+                    {buzzer_soundset(buzzer,tunes::D4,VCC,1); OLED_DrawLineBuffered(8,48,75,8,1);}
                 else if(keys.read()==0b100)
-                    {buzzer_soundset(buzzer,tunes::E4,VCC,1);OLED_DrawLineBuffered(8,40,75,8,1);}
+                    {buzzer_soundset(buzzer,tunes::E4,VCC,1); OLED_DrawLineBuffered(8,40,75,8,1);}
                 else if(keys.read()==0b1000)
-                    {buzzer_soundset(buzzer,tunes::F4,VCC,1);OLED_DrawLineBuffered(8,32,75,8,1);}
+                    {buzzer_soundset(buzzer,tunes::F4,VCC,1); OLED_DrawLineBuffered(8,32,75,8,1);}
                 else if(keys.read()==0b10000)
-                    {buzzer_soundset(buzzer,tunes::G4,VCC,1);OLED_DrawLineBuffered(8,24,75,8,1);}
+                    {buzzer_soundset(buzzer,tunes::G4,VCC,1); OLED_DrawLineBuffered(8,24,75,8,1);}
                 else if(keys.read()==0b100000)
-                    {buzzer_soundset(buzzer,tunes::A4,VCC,1);OLED_DrawLineBuffered(8,16,75,8,1);}
+                    {buzzer_soundset(buzzer,tunes::A4,VCC,1); OLED_DrawLineBuffered(8,16,75,8,1);}
                 else if(keys.read()==0b1000000)
-                    {buzzer_soundset(buzzer,tunes::B4,VCC,1);OLED_DrawLineBuffered(8,8,75,8,1);}
+                    {buzzer_soundset(buzzer,tunes::B4,VCC,1); OLED_DrawLineBuffered(8, 8,75,8,1);}
                 OLED_SendBuffer();
             }
-            else {buzzer_soundset(buzzer,tunes::Pause,VCC,1);OLED_Clear_Left();}
+            else {buzzer_soundset(buzzer,tunes::Pause,VCC,1); OLED_Clear_Left();}
             ThisThread::sleep_for(50ms);
         }
         else if(mode==2){
@@ -127,6 +129,7 @@ int main(){
         else if(mode==3){
             OLED_Clear_Left();
             wait_us(1000000);
+
             if(mode!=3) continue;
             
             OLED_ShowStringBuffered(10,20,"Playing",8,1);
@@ -135,7 +138,7 @@ int main(){
             OLED_ShowNumBuffered(97,97,mode,1,8,1);
             OLED_SendBuffer();
 
-            play_CRY(buzzer,VCC,mode==3);
+            play_SCB(buzzer,VCC,mode==3);
 
             OLED_ShowNumBuffered(97,97,mode,1,8,1);
             OLED_SendBuffer();
